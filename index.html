@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<head>
+		<title>CountDown</title>
+		
+	</head>
+
+	<body>
+		<form>
+Minutes: <input type="text" id="mns" name="mns" value="0" size="3" maxlength="3" /> &nbsp; &nbsp; 
+Seconds: <input type="text" id="scs" name="scs" value="0" size="2" maxlength="2" /><br/>
+<input type="button" id="btnct" value="START" onclick="countdownTimer()"/>
+<input type="button" id="btnst" value="STOP" onclick="stop()"/>
+<a href="index.html">
+    <button>RESET</button>
+</a>
+
+Countdown Timer: &nbsp; <span id="showmns">00</span>:<span id="showscs">00</span>
+<script type="text/javascript">
+   
+var ctmnts = 0;
+var ctsecs = 0;
+var startchr = 0;      
+let interval;
+var t
+var timer_is_on = 0;
+
+function countdownTimer() {
+  
+  if(startchr == 0 && document.getElementById('mns') && document.getElementById('scs')) {
+    // makes sure the script uses integer numbers
+    ctmnts = parseInt(document.getElementById('mns').value) + 0;
+    ctsecs = parseInt(document.getElementById('scs').value) * 1;
+
+   
+    if(isNaN(ctmnts)) ctmnts = 0;
+    if(isNaN(ctsecs)) ctsecs = 0;
+
+    
+    document.getElementById('mns').value = ctmnts;
+    document.getElementById('scs').value = ctsecs;
+    startchr = 1;
+    
+  }
+
+  
+  if(ctmnts==0 && ctsecs==0) {
+    startchr = 0;
+    document.getElementById('btnct').removeAttribute('disabled');    
+
+   
+    return false;
+  }
+  else {
+    
+    
+    
+    ctsecs--;
+    if(ctsecs < 0) {
+      if(ctmnts > 0) {
+        ctsecs = 59;
+        ctmnts--;
+      }
+      else {
+        ctsecs = 0;
+        ctmnts = 0;
+      }
+    }
+  }
+
+  
+  document.getElementById('showmns').innerHTML = ctmnts;
+  document.getElementById('showscs').innerHTML = ctsecs;
+  t=setTimeout('countdownTimer()', 1000);
+}
+
+function stop(){
+   clearTimeout(t);
+   timer_is_on = 0;
+  
+}
+
+</script>
+	</form>				
+	</body>
+</html>
